@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         setContentView(R.layout.activity_main);
 
         getTags();
-
+//
 //      Generate sample data
 //        String[] tagsArray = new String[]{"Lion", "Tiger", "Dog",
 //                "Cat", "Tortoise", "Rat", "Elephant", "Fox",
