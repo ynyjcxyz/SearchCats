@@ -3,7 +3,6 @@ package com.example.android.searchcat;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     private void getTags() {
-        Call<List<String>> call = RetrofitClient.getInstance().getMyApi().getTags("tags");
+        Call<List<String>> call = RetrofitClient.getInstance(getApplicationContext()).getMyApi().getTags("tags");
         call.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(@NonNull Call<List<String>> call, Response<List<String>> response) {

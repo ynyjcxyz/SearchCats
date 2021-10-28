@@ -1,5 +1,9 @@
 package com.example.android.searchcat;
 
+import android.content.Context;
+import com.chuckerteam.chucker.api.ChuckerInterceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.OkHttpClient.Builder;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -7,18 +11,24 @@ public class RetrofitClient {
     private static RetrofitClient instance = null;
     private Api myApi;
 
-    private RetrofitClient(){
+    private RetrofitClient(Context context){
+
+        OkHttpClient okhttpClient = new Builder()
+            .addInterceptor(new ChuckerInterceptor.Builder(context).build())
+            .build();
+
         Retrofit retrofit = new Retrofit
                 .Builder()
+            .client(okhttpClient)
                 .baseUrl(Api.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         myApi = retrofit.create(Api.class);
     }
 
-    public static synchronized RetrofitClient getInstance() {
+    public static synchronized RetrofitClient getInstance(Context context) {
         if (instance == null) {
-            instance = new RetrofitClient();
+            instance = new RetrofitClient(context);
         }
         return instance;
     }
