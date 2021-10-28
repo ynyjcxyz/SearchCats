@@ -8,5 +8,5 @@ import retrofit2.http.Path;
 public interface Api {
     String BASE_URL = "https://cataas.com/";
     @GET("api/{tags}")
-    Call<List<AnimalNames>> getTags(@Path("tags")String tags);
+    Call<List<String>> getTags(@Path("tags")String tags);
 }
