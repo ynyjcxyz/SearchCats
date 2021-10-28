@@ -14,14 +14,14 @@ public class ListViewAdapter extends BaseAdapter {
     // Declare Variables
     Context mContext;
     LayoutInflater inflater;
-    private List<AnimalNames> animalNamesList = null;
-    private final ArrayList<AnimalNames> arraylist;
+    private List<String> animalNamesList = null;
+    private final ArrayList<String> arraylist;
 
-    public ListViewAdapter(Context context, List<AnimalNames> animalNamesList) {
+    public ListViewAdapter(Context context, List<String> animalNamesList) {
         mContext = context;
         this.animalNamesList = animalNamesList;
         inflater = LayoutInflater.from(mContext);
-        this.arraylist = new ArrayList<AnimalNames>();
+        this.arraylist = new ArrayList<String>();
         this.arraylist.addAll(animalNamesList);
     }
 
@@ -35,7 +35,7 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public AnimalNames getItem(int position) {
+    public String getItem(int position) {
         return animalNamesList.get(position);
     }
 
@@ -56,7 +56,7 @@ public class ListViewAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
         // Set the results into TextViews
-        holder.name.setText(animalNamesList.get(position).getAnimalName());
+        holder.name.setText(animalNamesList.get(position));
         return view;
     }
 
@@ -67,8 +67,8 @@ public class ListViewAdapter extends BaseAdapter {
         if (charText.length() == 0) {
             animalNamesList.addAll(arraylist);
         } else {
-            for (AnimalNames wp : arraylist) {
-                if (wp.getAnimalName().toLowerCase(Locale.getDefault()).contains(charText)) {
+            for (String wp : arraylist) {
+                if (wp.toLowerCase(Locale.getDefault()).contains(charText)) {
                     animalNamesList.add(wp);
                 }
             }

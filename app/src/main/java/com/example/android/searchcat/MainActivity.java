@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     ListView list;
     ListViewAdapter adapter;
     SearchView editSearch;
-    ArrayList<AnimalNames> arraylist = new ArrayList<AnimalNames>();
+    ArrayList<String> arraylist = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +56,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     private void getTags() {
-        Call<List<AnimalNames>> call = RetrofitClient.getInstance().getMyApi().getTags("tags");
-        call.enqueue(new Callback<List<AnimalNames>>() {
+        Call<List<String>> call = RetrofitClient.getInstance().getMyApi().getTags("tags");
+        call.enqueue(new Callback<List<String>>() {
             @Override
-            public void onResponse(@NonNull Call<List<AnimalNames>> call, Response<List<AnimalNames>> response) {
-                List<AnimalNames> tagsList = response.body();
+            public void onResponse(@NonNull Call<List<String>> call, Response<List<String>> response) {
+                List<String> tagsList = response.body();
                 assert tagsList != null;
                 arraylist.addAll(tagsList);
                 list = (ListView) findViewById(R.id.listview);
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<AnimalNames>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<String>> call, Throwable t) {
                 throw new RuntimeException(t);
 //                Toast.makeText(getApplicationContext(), "An error has occurred", Toast.LENGTH_LONG).show();
             }
