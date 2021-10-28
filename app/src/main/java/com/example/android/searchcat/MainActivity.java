@@ -73,7 +73,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
             @Override
             public void onFailure(@NonNull Call<List<AnimalNames>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "An error has occurred", Toast.LENGTH_LONG).show();
+                throw new RuntimeException(t);
+//                Toast.makeText(getApplicationContext(), "An error has occurred", Toast.LENGTH_LONG).show();
             }
         });
 
