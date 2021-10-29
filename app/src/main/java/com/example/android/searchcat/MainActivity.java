@@ -1,16 +1,14 @@
 package com.example.android.searchcat;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         setContentView(R.layout.activity_main);
 
         getTags();
-//
+
 //      Generate sample data
 //        String[] tagsArray = new String[]{"Lion", "Tiger", "Dog",
 //                "Cat", "Tortoise", "Rat", "Elephant", "Fox",
@@ -59,20 +57,26 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Call<List<String>> call = RetrofitClient.getInstance(getApplicationContext()).getMyApi().getTags("tags");
         call.enqueue(new Callback<List<String>>() {
             @Override
-            public void onResponse(@NonNull Call<List<String>> call, Response<List<String>> response) {
+            public void onResponse(@NonNull Call<List<String>> call, @NonNull Response<List<String>> response) {
                 List<String> tagsList = response.body();
                 assert tagsList != null;
                 arraylist.addAll(tagsList);
-                list = (ListView) findViewById(R.id.listview);
 
+                list = findViewById(R.id.listview);
                 adapter = new ListViewAdapter(MainActivity.this, arraylist);
                 list.setAdapter(adapter);
-                editSearch = (SearchView) findViewById(R.id.search_view);
+
+                editSearch = findViewById(R.id.search_view);
                 editSearch.setOnQueryTextListener(MainActivity.this);
+
+                list.setOnItemClickListener((parent, view, position, id) -> {
+                    Object string = adapter.getItem(position);
+                    editSearch.setQuery(string.toString(),true);
+                });
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<String>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<String>> call, @NonNull Throwable t) {
                 throw new RuntimeException(t);
 //                Toast.makeText(getApplicationContext(), "An error has occurred", Toast.LENGTH_LONG).show();
             }
@@ -82,13 +86,19 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        return false;
+        Toast.makeText(MainActivity.this,"you choose:" + query, Toast.LENGTH_SHORT).show();
+        return true;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        String text = newText;
-        adapter.filter(text);
-        return false;
+        if(TextUtils.isEmpty(newText)){
+            list.clearTextFilter();
+        }else{
+            adapter.filter(newText);
+        }
+        return true;
+//        adapter.filter(newText);
+//        return false;
     }
 }
