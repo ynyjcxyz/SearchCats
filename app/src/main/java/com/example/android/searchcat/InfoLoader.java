@@ -31,9 +31,9 @@ public class InfoLoader extends AsyncTaskLoader<List<CatsInfo>> {
         Log.i(LOG_TAG,"This is loadInBackground() method");
         try{
             List<CatsInfo> catsInfo = CatsRepository.fetch(query);
+            return catsInfo;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 }

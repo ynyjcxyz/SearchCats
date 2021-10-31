@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -57,7 +59,8 @@ public class CatsListView extends AppCompatActivity implements LoaderManager.Loa
 
         Intent intent = getIntent();
         String queryString = intent.getStringExtra("query");
-        return new InfoLoader(CatsListView.this, queryString);
+//        Toast.makeText(getApplicationContext(), queryString, Toast.LENGTH_LONG).show();
+        return new InfoLoader(this, queryString);
     }
 
     @Override

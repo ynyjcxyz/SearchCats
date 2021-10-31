@@ -1,5 +1,6 @@
 package com.example.android.searchcat;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ public class InfoAdapter extends ArrayAdapter<CatsInfo> {
     public InfoAdapter(@NonNull Context context, List<CatsInfo> catsInfo) {
         super(context, 0, catsInfo);
     }
+    @SuppressLint("SetTextI18n")
     public View getView(int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;
         if (listItemView == null) {
@@ -34,12 +36,11 @@ public class InfoAdapter extends ArrayAdapter<CatsInfo> {
         TextView tags = listItemView.findViewById(R.id.tags);
         List<String> tagsList = currentCatInfo.CatTags();
         StringBuilder tag = new StringBuilder(" ");
-        for(int i = 0 ; i < tagsList.size() ; i++){
+        for(int i = 0; i < (tagsList != null ? tagsList.size() : 0); i++){
             tag.append(tagsList.get(i)).append(",");
         }
-        tags.setText(tag.toString());
+        tags.setText("Tags:" + tag.toString());
 
         return listItemView;
     }
-
 }
